@@ -10,6 +10,8 @@ public:
 	void ClearCmdOutput(){ memset(m_strCmdOutput, 0, CMD_OUTPUT_SIZE); };
 	void AnalyseDevice(char* strAdbDevices);
 
+	int GetDeviceCount(){ return m_nDevice; };
+
 private:
 	char m_strCmdOutput[CMD_OUTPUT_SIZE];
 	char m_strDeviceID1[32];

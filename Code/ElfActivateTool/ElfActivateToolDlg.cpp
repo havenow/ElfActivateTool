@@ -70,6 +70,8 @@ BEGIN_MESSAGE_MAP(CElfActivateToolDlg, CDialogEx)
 	ON_BN_CLICKED(IDOK, &CElfActivateToolDlg::OnBnClickedOk)
 	ON_BN_CLICKED(IDC_BTN_CLEAR, &CElfActivateToolDlg::OnBnClickedBtnClear)
 	ON_BN_CLICKED(IDC_BTN_DEBUG, &CElfActivateToolDlg::OnBnClickedBtnDebug)
+	ON_BN_CLICKED(IDC_BTN_CONNECT_PHONE, &CElfActivateToolDlg::OnBnClickedBtnConnectPhone)
+	ON_BN_CLICKED(IDC_BTN_ACTIVATE_ELF, &CElfActivateToolDlg::OnBnClickedBtnActivateElf)
 END_MESSAGE_MAP()
 
 
@@ -208,7 +210,7 @@ BOOL CElfActivateToolDlg::ExecDosCmd(const char* strCmdLine)
 		memset(buffer, 0, sizeof(buffer));
 	}
 
-	//m_moblieInfo.AnalyseDevice(m_strOutput);
+	m_moblieInfo.AnalyseDevice(m_strOutput);
 	
 	ShowLog(m_strOutput);   //显示
 	memset(m_strOutput, 0, CMD_OUTPUT_SIZE);
@@ -301,4 +303,42 @@ void CElfActivateToolDlg::OnBnClickedBtnDebug()
 	{
 		SetWindowPos(NULL, 0, 0, rectLarge.Width(), rectLarge.Height(), SWP_NOMOVE | SWP_NOZORDER);
 	}
+}
+
+
+void CElfActivateToolDlg::OnBnClickedBtnConnectPhone()
+{
+	ExecDosCmd("adb devices");
+	if (m_moblieInfo.GetDeviceCount() > 0)
+	{
+		SetDlgItemText(IDC_STATIC_CONNECT, "手机连接成功");
+	}
+}
+
+
+void CElfActivateToolDlg::OnBnClickedBtnActivateElf()
+{
+	//adb push minitouch /data/local/tmp
+	//adb shell chmod 777 /data/local/tmp/minitouch
+	//adb shell /data/local/tmp/minitouch
+	char strCmdLine[512] = "\0";
+	strcpy(strCmdLine, g_strExeFilePath);
+	strcat(strCmdLine, "adb push ");
+	strcat(strCmdLine, g_strExeFilePath);
+	strcat(strCmdLine, "minitouch /data/local/tmp");
+	ExecDosCmd(strCmdLine);
+
+	strCmdLine[0] = '\0';
+	strcpy(strCmdLine, g_strExeFilePath);
+	strcat(strCmdLine, "adb shell chmod 777 /data/local/tmp/minitouch");
+	ExecDosCmd(strCmdLine);
+
+	strCmdLine[0] = '\0';
+	strcpy(strCmdLine, g_strExeFilePath);
+	strcat(strCmdLine, "adb shell /data/local/tmp/minitouch");
+	ExecDosCmd(strCmdLine);
+
+	//ExecDosCmd("adb push minitouch /data/local/tmp");
+	//ExecDosCmd("adb shell chmod 777 /data/local/tmp/minitouch");
+	//ExecDosCmd("adb shell /data/local/tmp/minitouch");
 }

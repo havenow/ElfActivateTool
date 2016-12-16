@@ -19,7 +19,7 @@ class CElfActivateToolApp : public CWinApp
 {
 public:
 	CElfActivateToolApp();
-
+	
 // ÖØÐ´
 public:
 	virtual BOOL InitInstance();
@@ -30,3 +30,4 @@ public:
 };
 
 extern CElfActivateToolApp theApp;
+extern char g_strExeFilePath[512];

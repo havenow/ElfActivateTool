@@ -33,6 +33,7 @@ CElfActivateToolApp::CElfActivateToolApp()
 // 唯一的一个 CElfActivateToolApp 对象
 
 CElfActivateToolApp theApp;
+char g_strExeFilePath[512] = {'\0'};
 
 
 // CElfActivateToolApp 初始化
@@ -75,6 +76,9 @@ BOOL CElfActivateToolApp::InitInstance()
 	// TODO:  应适当修改该字符串，
 	// 例如修改为公司或组织名
 	SetRegistryKey(_T("应用程序向导生成的本地应用程序"));
+
+	::GetModuleFileName(NULL, g_strExeFilePath, sizeof(g_strExeFilePath));
+	strcpy(strrchr(g_strExeFilePath, '\\'), "\\");
 
 	CElfActivateToolDlg dlg;
 	m_pMainWnd = &dlg;

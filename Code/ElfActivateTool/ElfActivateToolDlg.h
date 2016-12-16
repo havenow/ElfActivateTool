@@ -53,4 +53,6 @@ public:
 	afx_msg void OnBnClickedOk();
 	afx_msg void OnBnClickedBtnClear();
 	afx_msg void OnBnClickedBtnDebug();
+	afx_msg void OnBnClickedBtnConnectPhone();
+	afx_msg void OnBnClickedBtnActivateElf();
 };
