@@ -1,0 +1,2 @@
+# ElfActivateTool
+windows使用adb命令启动Android系统上linux程序
