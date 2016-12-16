@@ -69,6 +69,7 @@ BEGIN_MESSAGE_MAP(CElfActivateToolDlg, CDialogEx)
 	ON_WM_QUERYDRAGICON()
 	ON_BN_CLICKED(IDOK, &CElfActivateToolDlg::OnBnClickedOk)
 	ON_BN_CLICKED(IDC_BTN_CLEAR, &CElfActivateToolDlg::OnBnClickedBtnClear)
+	ON_BN_CLICKED(IDC_BTN_DEBUG, &CElfActivateToolDlg::OnBnClickedBtnDebug)
 END_MESSAGE_MAP()
 
 
@@ -104,6 +105,7 @@ BOOL CElfActivateToolDlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// 设置小图标
 
 	// TODO:  在此添加额外的初始化代码
+	OnBnClickedBtnDebug();
 
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
@@ -219,6 +221,7 @@ void CElfActivateToolDlg::ShowLog(const char* buffer)
 {
 	if (m_richEditOutput.GetLineCount() > 1000000)
 	{
+		m_richEditOutput.SetSel(0, -1);
 		m_richEditOutput.Clear();
 	}
 
@@ -260,4 +263,42 @@ void CElfActivateToolDlg::OnBnClickedBtnClear()
 {
 	m_richEditOutput.SetSel(0, -1);
 	m_richEditOutput.Clear();
+}
+
+
+void CElfActivateToolDlg::OnBnClickedBtnDebug()
+{
+	CString strText;
+	GetDlgItemText(IDC_BTN_DEBUG, strText);
+	if ("DebugOpen" == strText)
+	{
+		SetDlgItemText(IDC_BTN_DEBUG, "DebugClose");
+	} 
+	else
+	{
+		SetDlgItemText(IDC_BTN_DEBUG, "DebugOpen");
+	}
+
+	static CRect rectLarge;
+	static CRect rectSmall;
+
+	if (rectLarge.IsRectNull())
+	{
+		CRect rectSeparator;
+		GetWindowRect(&rectLarge);
+		GetDlgItem(IDC_SEPERATOR)->GetWindowRect(&rectSeparator);
+
+		rectSmall.left		= rectLarge.left;
+		rectSmall.top		= rectLarge.top;
+		rectSmall.right		= rectLarge.right;
+		rectSmall.bottom	= rectSeparator.bottom;
+	}
+	if ("DebugOpen" == strText)
+	{
+		SetWindowPos(NULL, 0, 0, rectSmall.Width(), rectSmall.Height(), SWP_NOMOVE | SWP_NOZORDER);
+	} 
+	else
+	{
+		SetWindowPos(NULL, 0, 0, rectLarge.Width(), rectLarge.Height(), SWP_NOMOVE | SWP_NOZORDER);
+	}
 }

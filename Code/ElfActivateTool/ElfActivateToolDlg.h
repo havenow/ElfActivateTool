@@ -52,4 +52,5 @@ public:
 	void ShowLog(const char* buffer);
 	afx_msg void OnBnClickedOk();
 	afx_msg void OnBnClickedBtnClear();
+	afx_msg void OnBnClickedBtnDebug();
 };
