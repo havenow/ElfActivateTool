@@ -50,7 +50,7 @@ END_MESSAGE_MAP()
 
 CElfActivateToolDlg::CElfActivateToolDlg(CWnd* pParent /*=NULL*/)
 	: CDialogEx(CElfActivateToolDlg::IDD, pParent)
-	, m_strCmdLine(_T("adb devices"))
+	, m_strCmdLine(_T(""))
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 	memset(m_strOutput, 0, 8192);
@@ -107,7 +107,7 @@ BOOL CElfActivateToolDlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// 设置小图标
 
 	// TODO:  在此添加额外的初始化代码
-	OnBnClickedBtnDebug();
+	//OnBnClickedBtnDebug();
 
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
@@ -295,7 +295,7 @@ void CElfActivateToolDlg::OnBnClickedBtnDebug()
 		rectSmall.right		= rectLarge.right;
 		rectSmall.bottom	= rectSeparator.bottom;
 	}
-	if ("DebugOpen" == strText)
+	if (strText == "DebugOpen")
 	{
 		SetWindowPos(NULL, 0, 0, rectSmall.Width(), rectSmall.Height(), SWP_NOMOVE | SWP_NOZORDER);
 	} 
